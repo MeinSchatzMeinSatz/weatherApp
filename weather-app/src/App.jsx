@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import WeatherBox from "./assets/components/WeatherBox";
+import WeatherButtons from "./assets/components/WeatherButtons";
 
 function App() {
   /*
@@ -37,7 +39,12 @@ function App() {
     getCurrentLocation();
   }, []);
 
-  return <div className="text-blue-600">hello</div>;
+  return (
+    <div className="flex flex-col justify-center items-center h-screen bg-blue-200 gap-4">
+      <WeatherBox />
+      <WeatherButtons />
+    </div>
+  );
 }
 
 export default App;
