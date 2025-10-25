@@ -3,6 +3,9 @@ import { ClipLoader } from "react-spinners";
 // import getWeatherAPI from "./assets/services/api";
 import WeatherBox from "./assets/components/WeatherBox";
 import WeatherButtons from "./assets/components/WeatherButtons";
+import Hamburg from "./assets/images/Hamburg.jpg";
+import NewYork from "./assets/images/NewYork.jpg";
+import Tokyo from "./assets/images/tokyo.jpg";
 
 function App() {
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
@@ -63,7 +66,15 @@ function App() {
   }, [city]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-blue-200 gap-4">
+    <div
+      className="flex flex-col justify-center items-center h-screen bg-blue-300 gap-4"
+      // style={{
+      //   backgroundImage: `url(${Hamburg})`,
+      //   bacgroundPosition: "center",
+      //   backgroundSize: "cover",
+      //   backgroundRepeat: "no-repeat",
+      // }}
+    >
       {loading ? (
         <ClipLoader
           color={"#ffffff"}

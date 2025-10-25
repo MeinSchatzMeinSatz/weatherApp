@@ -6,7 +6,7 @@ const WeatherBox = ({ weather }) => {
   return (
     <div>
       <h1 className="sr-only">날씨 앱</h1>
-      <div className="flex flex-col justify-center items-center w-[300px] h-[300px] rounded-[30px] bg-white">
+      <div className="flex flex-col justify-center items-center w-[300px] h-[300px] rounded-[30px] bg-white opacity-75">
         {/* 날씨 정보 */}
         <p>{weather && weather.name}</p>
         <p className="text-[30px] text-blue-300">
