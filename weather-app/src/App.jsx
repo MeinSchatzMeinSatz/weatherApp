@@ -12,6 +12,8 @@ function App() {
   6. 데이터를 불러오는 동안 로딩 스피너가 돈다.
   */
 
+  const [weather, setWeather] = useState(null);
+
   function getCurrentLocation() {
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
@@ -23,13 +25,13 @@ function App() {
 
   // 현재 위치 기반 날씨 API 호출
   async function getWeatehrByCurrentLocation(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=83d9de054c0a9f6845a3692815169707`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=83d9de054c0a9f6845a3692815169707&units=metric`;
 
     try {
       const response = await fetch(url);
       const data = await response.json();
       console.log("데이터", data);
-      console.log("현재 날씨", data.weather[0].main);
+      setWeather(data);
     } catch (error) {
       console.error("에러 발생:", error);
     }
@@ -41,7 +43,7 @@ function App() {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-blue-200 gap-4">
-      <WeatherBox />
+      <WeatherBox weather={weather} />
       <WeatherButtons />
     </div>
   );
