@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
+// import getWeatherAPI from "./assets/services/api";
 import WeatherBox from "./assets/components/WeatherBox";
 import WeatherButtons from "./assets/components/WeatherButtons";
 
