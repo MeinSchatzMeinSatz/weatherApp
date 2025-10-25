@@ -4,6 +4,8 @@ import WeatherBox from "./assets/components/WeatherBox";
 import WeatherButtons from "./assets/components/WeatherButtons";
 
 function App() {
+  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ function App() {
 
   // 현재 위치 기반 날씨 API 호출
   async function getWeatherByCurrentLocation(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=83d9de054c0a9f6845a3692815169707&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
     setLoading(true);
 
     try {
@@ -36,7 +38,7 @@ function App() {
 
   // 도시 이름 기반 날씨 API 호출
   async function getWeatherByCityName(cityName) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=83d9de054c0a9f6845a3692815169707&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
     setLoading(true);
 
     try {
