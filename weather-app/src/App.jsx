@@ -9,6 +9,7 @@ function App() {
 
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const cities = ["Hamburg", "New York", "Tokyo"];
 
@@ -28,7 +29,6 @@ function App() {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("데이터", data);
       setWeather(data);
     } catch (error) {
       console.error("에러 발생:", error);
@@ -45,8 +45,8 @@ function App() {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("도시데이터", data);
       setWeather(data);
+      setSelectedCity(data.name);
     } catch (error) {
       console.error("에러 발생", error);
     } finally {
@@ -75,7 +75,12 @@ function App() {
       ) : (
         <>
           <WeatherBox weather={weather} />
-          <WeatherButtons cities={cities} setCity={setCity} />
+          <WeatherButtons
+            cities={cities}
+            setCity={setCity}
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
+          />
         </>
       )}
     </div>
