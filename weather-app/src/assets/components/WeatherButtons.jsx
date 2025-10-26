@@ -7,7 +7,7 @@ const WeatherButtons = ({ cities, setCity, selectedCity, setSelectedCity }) => {
       <div className="flex justify-center items-center gap-1 w-[300px] h-[50px] bg-white rounded-[30px] opacity-75">
         <button
           className={`${
-            selectedCity === "" ? "bg-blue-500" : "bg-blue-100"
+            selectedCity === null ? "bg-blue-500" : "bg-blue-100"
           } hover:bg-blue-500`}
           onClick={() => {
             setCity(""), setSelectedCity("");

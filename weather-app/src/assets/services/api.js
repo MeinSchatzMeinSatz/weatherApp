@@ -1,43 +1,41 @@
-import { fetchAPI } from "../utils/fetchAPI.js";
 import { WEATHER_URL } from "./https.js";
 
-export default function getWeatherAPI() {
+export const weatherAPI = {
   // 현재 위치 기반 날씨 API 호출
-  async function getWeatherByCurrentLocation(lat, lon, apiKey) {
-    const url = WEATHER_URL.byCurrentLocation(lat, lon, apiKey);
+  getWeatherByCurrentLocation: async (lat, lon) => {
+    const url = WEATHER_URL.byCurrentLocation(lat, lon);
 
     try {
-      const response = await fetchAPI(url);
-      const data = await response.json();
+      const response = await fetch(url);
 
       if (!response.ok) {
-        throw new Error(
-          data?.message || "날씨 정보를 불러오는데 실패했습니다."
-        );
+        throw new Error("날씨 정보를 불러오는데 실패했습니다.");
       }
+
+      const data = await response.json();
 
       return data;
     } catch (error) {
       throw error;
     }
-  }
+  },
 
   // 도시 이름 기반 날씨 API 호출
-  async function getWeatherByCityName(cityName, apiKey) {
-    const url = WEATHER_URL.byCityName(cityName, apiKey);
+  getWeatherByCityName: async (cityName) => {
+    const url = WEATHER_URL.byCityName(cityName);
 
     try {
-      const response = await fetchAPI(url);
-      const data = await response.json();
+      const response = await fetch(url);
+
       if (!response.ok) {
-        throw new Error(
-          data?.message || "날씨 정보를 불러오는데 실패했습니다."
-        );
+        throw new Error("날씨 정보를 불러오는데 실패했습니다.");
       }
+
+      const data = await response.json();
 
       return data;
     } catch (error) {
       throw error;
     }
-  }
-}
+  },
+};

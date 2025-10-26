@@ -3,38 +3,33 @@ import { ClipLoader } from "react-spinners";
 // import getWeatherAPI from "./assets/services/api";
 import WeatherBox from "./assets/components/WeatherBox";
 import WeatherButtons from "./assets/components/WeatherButtons";
-import Hamburg from "./assets/images/Hamburg.jpg";
-import NewYork from "./assets/images/NewYork.jpg";
-import Tokyo from "./assets/images/tokyo.jpg";
+import { weatherAPI } from "./assets/services/api.js";
 
 function App() {
-  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
   const [selectedCity, setSelectedCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const cities = ["Hamburg", "New York", "Tokyo"];
 
-  function getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let lat = position.coords.latitude;
-      let lon = position.coords.longitude;
-      getWeatherByCurrentLocation(lat, lon);
-    });
-  }
-
-  // 현재 위치 기반 날씨 API 호출
-  async function getWeatherByCurrentLocation(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+  // 현재 위치 기반 날씨 가져오기
+  async function getWeatherByCurrentLocation() {
     setLoading(true);
 
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      // API 호출
+      const data = await weatherAPI.getWeatherByCurrentLocation(lat, lon);
       setWeather(data);
+      setSelectedCity(null);
     } catch (error) {
-      console.error("에러 발생:", error);
+      console.error("현재 위치 날씨 조회 실패:", error);
     } finally {
       setLoading(false);
     }
@@ -42,16 +37,14 @@ function App() {
 
   // 도시 이름 기반 날씨 API 호출
   async function getWeatherByCityName(cityName) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
     setLoading(true);
 
     try {
-      const response = await fetch(url);
-      const data = await response.json();
+      const data = await weatherAPI.getWeatherByCityName(cityName);
       setWeather(data);
       setSelectedCity(data.name);
     } catch (error) {
-      console.error("에러 발생", error);
+      console.error("도시 날씨 이름 조회 실패:", error);
     } finally {
       setLoading(false);
     }
@@ -61,20 +54,12 @@ function App() {
     if (city !== "") {
       getWeatherByCityName(city);
     } else {
-      getCurrentLocation();
+      getWeatherByCurrentLocation();
     }
   }, [city]);
 
   return (
-    <div
-      className="flex flex-col justify-center items-center h-screen bg-blue-300 gap-4"
-      // style={{
-      //   backgroundImage: `url(${Hamburg})`,
-      //   bacgroundPosition: "center",
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      // }}
-    >
+    <div className="flex flex-col justify-center items-center h-screen bg-blue-300 gap-4">
       {loading ? (
         <ClipLoader
           color={"#ffffff"}
