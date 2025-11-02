@@ -185,9 +185,9 @@ const lon = position.coords.longitude;
 
 ## 향후 개선 사항
 
--[] Context API 또는 상태 관리 라이브러리 도입
--[] 에러 상태 UI 추가
--[] 반응형 디자인 개선
+- Context API 또는 상태 관리 라이브러리 도입
+- 에러 상태 UI 추가
+- 반응형 디자인 개선
 
 📚 참고 자료
 
