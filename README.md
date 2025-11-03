@@ -201,5 +201,61 @@ Tailwind CSS Documentation
 학습 목적: API 사용법 및 모듈화 패턴 학습
 
 
+## 2025.11.03 업데이트 내역
 
+### 새로운 기능
+
+#### 1. 도시 추가 기능 (Modal)
+- **AddCityModal 컴포넌트 구현**
+  - `createPortal`을 사용하여 모달을 body에 직접 렌더링
+  - 사용자가 원하는 도시를 입력하여 즐겨찾기에 추가 가능
+  - 중복 도시 추가 방지 로직 구현
+  
+- **주요 기술**
+  - React Portal을 활용한 모달 구현
+  - Redux를 통한 전역 상태 관리 (`ADD_CITY` 액션)
+  - z-index 문제 해결 및 부모 컴포넌트 스타일 격리
+
+#### 2. 도시 삭제 기능
+- **개별 도시 삭제 버튼 추가**
+  - 각 도시 버튼에 삭제 아이콘 배치
+  - 클릭 이벤트 전파 방지 (`e.stopPropagation()`)로 의도치 않은 도시 선택 방지
+  - 삭제 시 선택된 도시 상태 자동 초기화
+  
+- **Redux Reducer 로직 수정**
+  - `filter()` 메서드를 사용한 안정적인 배열 요소 삭제
+  - 인덱스 기반 삭제 로직 개선
+
+#### 3. Redux를 활용한 상태 관리 개선
+- **전역 상태로 도시 목록 관리**
+  - `useSelector`를 통해 Redux store에서 도시 목록 불러오기
+  - 컴포넌트 간 도시 데이터 공유 및 동기화
+  
+- **액션 타입**
+  - `ADD_CITY`: 새로운 도시 추가
+  - `REMOVE_CITY`: 인덱스 기반 도시 삭제
+
+### 버그 수정
+
+1. **Git Push 오류 해결**
+   - Non-fast-forward 에러: `git pull` 후 푸시로 해결
+   - Divergent branches 에러: merge 전략 사용으로 해결
+
+2. **Redux Reducer `splice()` 버그 수정**
+   - 문제: `splice()`가 삭제된 요소를 반환하여 잘못된 상태 업데이트
+   - 해결: `filter()` 메서드로 변경하여 새 배열 반환
+
+3. **도시 선택 상태 동기화 문제 해결**
+   - `setCity()`와 `setSelectedCity()` 동시 호출로 상태 일관성 확보
+
+### 기술 스택 추가
+- **React Portal** (`react-dom`의 `createPortal`)
+- **Redux** (전역 상태 관리)
+- **Tailwind CSS** (스타일링)
+
+### 배운 점
+- React Portal을 활용한 모달 구현 패턴
+- Redux의 불변성을 지키는 배열 업데이트 방법
+- 이벤트 버블링 제어 (`stopPropagation`)
+- Git 협업 시 발생하는 일반적인 오류 해결 방법
 
