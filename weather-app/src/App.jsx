@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
-// import getWeatherAPI from "./assets/services/api";
 import WeatherBox from "./assets/components/WeatherBox";
 import WeatherButtons from "./assets/components/WeatherButtons";
 import { weatherAPI } from "./assets/services/api.js";
@@ -10,7 +9,6 @@ function App() {
   const [city, setCity] = useState("");
   const [selectedCity, setSelectedCity] = useState(null);
   const [loading, setLoading] = useState(false);
-  const cities = ["Hamburg", "New York", "Tokyo"];
 
   // 현재 위치 기반 날씨 가져오기
   async function getWeatherByCurrentLocation() {
@@ -72,7 +70,6 @@ function App() {
         <>
           <WeatherBox weather={weather} />
           <WeatherButtons
-            cities={cities}
             setCity={setCity}
             selectedCity={selectedCity}
             setSelectedCity={setSelectedCity}

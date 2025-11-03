@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddCityModal from "./AddCityModal";
+import addIcon from "../images/add_icon.png";
 
-const WeatherButtons = ({ cities, setCity, selectedCity, setSelectedCity }) => {
+const WeatherButtons = ({ setCity, selectedCity, setSelectedCity }) => {
+  const dispatch = useDispatch();
+  const storedCities = useSelector((state) => state.cityList);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       {/* 버튼들 */}
-      <div className="flex justify-center items-center gap-1 w-[300px] h-[50px] bg-white rounded-[30px] opacity-75">
+      <div className="flex justify-center items-center gap-1 p-[20px] h-[50px] bg-white rounded-[30px] opacity-75">
         <button
           className={`${
             selectedCity === null ? "bg-blue-500" : "bg-blue-100"
@@ -15,7 +22,7 @@ const WeatherButtons = ({ cities, setCity, selectedCity, setSelectedCity }) => {
         >
           현재 위치
         </button>
-        {cities.map((city, idx) => {
+        {storedCities.map((city, idx) => {
           return (
             <button
               key={idx}
@@ -30,7 +37,20 @@ const WeatherButtons = ({ cities, setCity, selectedCity, setSelectedCity }) => {
             </button>
           );
         })}
+        <button onClick={() => setIsOpen(true)}>
+          <img className="w-[20px] h-[20px]" src={addIcon} alt="추가 버튼" />
+        </button>
       </div>
+      {/* 모달 컴포넌트 */}
+      {isOpen && (
+        <AddCityModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          onAddCity={(cityName) => {
+            dispatch({ type: "ADD_CITY", payload: cityName });
+          }}
+        />
+      )}
     </>
   );
 };
