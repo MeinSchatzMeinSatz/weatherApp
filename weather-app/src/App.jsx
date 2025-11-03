@@ -37,6 +37,10 @@ function App() {
   async function getWeatherByCityName(cityName) {
     setLoading(true);
 
+    if (selectedCity === "") {
+      return getWeatherByCurrentLocation();
+    }
+
     try {
       const data = await weatherAPI.getWeatherByCityName(cityName);
       setWeather(data);
@@ -54,7 +58,7 @@ function App() {
     } else {
       getWeatherByCurrentLocation();
     }
-  }, [city]);
+  }, [city, selectedCity]);
 
   return (
     <div className="flex flex-col justify-center items-center h-screen bg-blue-300 gap-4">
